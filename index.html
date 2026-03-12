@@ -90,41 +90,33 @@ async function askAI() {
     const text = input.value;
     if(!text) return;
 
-    // إظهار رسالة المستخدم في الواجهة
     msgDiv.innerHTML += `<div class="msg user-msg"><b>أنت:</b> ${text}</div>`;
     input.value = "";
     msgDiv.scrollTop = msgDiv.scrollHeight;
 
-    // المفتاح الخاص بك الذي ينتهي بـ ZanU
     const API_KEY = "AIzaSyCKYjmPx78dMNW3HOY51wAgiyElPM0SYow"; 
-    
-    // الرابط الصحيح والمجاني للنموذج السريع
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    // الرابط السحري الذي سيحل المشكلة
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
     try {
         const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: "أنت أستاذ رياضيات جزائري خبير في التعليم المتوسط. أجب باختصار على سؤال التلميذ: " + text }]
-                }]
+                contents: [{ parts: [{ text: "أنت أستاذ رياضيات جزائري، أجب باختصار: " + text }] }]
             })
         });
 
         const data = await response.json();
         
         if (data.error) {
-            // شرح الخطأ إذا كان هناك مشكلة في الإعدادات
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">خطأ تقني: ${data.error.message}</div>`;
-        } else if (data.candidates && data.candidates[0].content) {
-            // عرض إجابة الأستاذ الإلكتروني
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">خطأ: ${data.error.message}</div>`;
+        } else if (data.candidates) {
             const aiResponse = data.candidates[0].content.parts[0].text;
             msgDiv.innerHTML += `<div class="msg ai-msg"><b>المساعد:</b> ${aiResponse}</div>`;
-        } else {
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">عذراً، لم أتمكن من الرد حالياً.</div>`;
         }
     } catch (e) {
-        msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">فشل الاتصال: تأكد من تشغيل الموقع من رابط GitHub Pages المباشر.</div>`;
+        msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">فشل الاتصال بالشبكة.</div>`;
     }
     msgDiv.scrollTop = msgDiv.scrollHeight;
 }
