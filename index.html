@@ -3,143 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الرياضيات - الأستاذ المبدع</title>
+    <title>منصة الرياضيات - المتوسط</title>
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e67e22;
-            --success-color: #27ae60;
-            --bg-color: #f4f7f6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            color: var(--primary-color);
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            color: var(--accent-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .btn-solution {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: 0.3s;
-            margin-top: 15px;
-        }
-
-        .btn-solution:hover {
-            background-color: #d35400;
-            transform: translateY(-2px);
-        }
-
-        #solution-box {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            border-right: 5px solid var(--success-color);
-            background: #f0fff4;
-            line-height: 2;
-            border-radius: 5px;
-        }
-
-        .quiz-placeholder {
-            text-align: center;
-            padding: 40px;
-            border: 2px dashed #ccc;
-            color: #888;
-            border-radius: 15px;
-        }
+        :root { --primary: #2c3e50; --accent: #e67e22; --light: #f4f7f6; --success: #27ae60; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--light); margin: 0; direction: rtl; }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+        .container { max-width: 900px; margin: auto; padding: 20px; }
+        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h2 { color: var(--accent); border-bottom: 2px solid var(--light); padding-bottom: 10px; }
+        .btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .solution { display: none; margin-top: 15px; padding: 15px; background: #e8f5e9; border-right: 5px solid var(--success); }
+        
+        /* تصميم صندوق الدردشة */
+        #chat-widget { position: fixed; bottom: 20px; left: 20px; width: 300px; z-index: 1000; }
+        #chat-window { background: white; border-radius: 10px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; height: 400px; }
+        #chat-header { background: var(--primary); color: white; padding: 10px; text-align: center; cursor: pointer; }
+        #messages { flex: 1; padding: 10px; overflow-y: auto; font-size: 14px; background: #fafafa; }
+        #input-area { display: flex; border-top: 1px solid #eee; }
+        #input-area input { flex: 1; border: none; padding: 10px; outline: none; }
+        #input-area button { background: var(--success); color: white; border: none; padding: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>منصة الرياضيات للتعليم المتوسط</h1>
-    <p>أهلاً بكم يا تلاميذي الأعزاء في فضاء الرياضيات</p>
+    <h1>منصة الأستاذ للرياضيات</h1>
+    <p>تلاميذ المتوسط بالجزائر - طريقكم نحو النجاح</p>
 </header>
 
 <div class="container">
     
     <div class="card">
-        <h2>📚 ملخص الدرس: الأعداد الطبيعية والناطقة</h2>
-        <p>تذكر: القاسم المشترك الأكبر \(PGCD\) لعددين هو أكبر عدد يقسمهما في آن واحد.</p>
+        <h2>📚 ملخص الدرس: الحساب الحرفي</h2>
+        <p>نشر عبارة يعني كتابتها على شكل مجموع أو فرق. مثال: \(a(b+c) = ab + ac\)</p>
     </div>
 
     <div class="card">
-        <h2>✏️ تمرين مقترح (4 متوسط)</h2>
-        <p>1) احسب القاسم المشترك الأكبر للعددين \(1215\) و \(945\).</p>
-        <p>2) اكتب الكسر \(\frac{945}{1215}\) على شكل كسر غير قابل للاختزال.</p>
-        
-        <button class="btn-solution" onclick="toggleSolution()">إظهار الحل النموذجي</button>
-
-        <div id="solution-box">
-            <strong>الخطوة 1: حساب الـ \(PGCD\) باستعمال خوارزمية إقليدس:</strong><br>
-            \(1215 = 945 \times 1 + 270\)<br>
-            \(945 = 270 \times 3 + 135\)<br>
-            \(270 = 135 \times 2 + 0\)<br>
-            إذن: \(PGCD(1215, 945) = 135\)<br><br>
-            <strong>الخطوة 2: اختزال الكسر:</strong><br>
-            \(\frac{945 \div 135}{1215 \div 135} = \frac{7}{9}\)
+        <h2>✏️ تمرين تفاعلي</h2>
+        <p>انشر وبسّط العبارة التالية: \( E = 3(x + 5) + 2x \)</p>
+        <button class="btn" onclick="toggleSolution()">إظهار الحل النموذجي</button>
+        <div id="sol" class="solution">
+            \( E = 3x + 15 + 2x \) <br>
+            \( E = (3x + 2x) + 15 \) <br>
+            <strong>النتيجة: \( E = 5x + 15 \)</strong>
         </div>
     </div>
 
     <div class="card">
-        <h2>📝 اختبارات تفاعلية (كويز)</h2>
-        <div class="quiz-placeholder">
-            قريباً سيتم إضافة أسئلة تفاعلية هنا بنظام التصحيح التلقائي!
-        </div>
+        <h2>📩 تواصل مع الأستاذ</h2>
+        <p>هل لديك سؤال خاص؟ أرسل رسالة للأستاذ مباشرة:</p>
+        <a href="https://wa.me/213XXXXXXXXX" target="_blank" class="btn" style="text-decoration: none; background: #25D366;">راسلني عبر WhatsApp</a>
     </div>
 
 </div>
 
+<div id="chat-widget">
+    <div id="chat-window">
+        <div id="chat-header" onclick="toggleChatBox()">المساعد الذكي للأستاذ 🤖</div>
+        <div id="messages"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="اسألني أي سؤال في الرياضيات...">
+            <button onclick="askGemini()">إرسال</button>
+        </div>
+    </div>
+    <button class="btn" id="chat-toggle" onclick="toggleChatBox()" style="border-radius: 50px; padding: 15px 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">💬 اسأل المساعد الذكي</button>
+</div>
+
 <script>
     function toggleSolution() {
-        var x = document.getElementById("solution-box");
-        var btn = document.querySelector(".btn-solution");
-        if (x.style.display === "none" || x.style.display === "") {
-            x.style.display = "block";
-            btn.innerHTML = "إخفاء الحل";
-        } else {
-            x.style.display = "none";
-            btn.innerHTML = "إظهار الحل النموذجي";
+        var s = document.getElementById('sol');
+        s.style.display = (s.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function toggleChatBox() {
+        var win = document.getElementById('chat-window');
+        win.style.display = (win.style.display === 'none' || win.style.display === '') ? 'flex' : 'none';
+    }
+
+    async function askGemini() {
+        const input = document.getElementById('user-input');
+        const msgDiv = document.getElementById('messages');
+        const text = input.value;
+        if(!text) return;
+
+        msgDiv.innerHTML += `<div><b>أنت:</b> ${text}</div>`;
+        input.value = "";
+
+        // ملاحظة: ضع مفتاح API الخاص بك هنا
+        const API_KEY = "ضـع_مـفـتـاحـك_هـنـا"; 
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: "أنت أستاذ رياضيات جزائري للمتوسط، أجب باختصار على: " + text }] }] })
+            });
+            const data = await response.json();
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            msgDiv.innerHTML += `<div style="color:green"><b>المساعد:</b> ${aiResponse}</div>`;
+            msgDiv.scrollTop = msgDiv.scrollHeight;
+        } catch (e) {
+            msgDiv.innerHTML += `<div style="color:red"><b>خطأ:</b> تأكد من مفتاح API أو الاتصال.</div>`;
         }
     }
 </script>
