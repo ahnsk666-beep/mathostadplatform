@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الرياضيات - الأستاذ المبدع</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --success-color: #27ae60;
+            --bg-color: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: var(--primary-color);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .btn-solution {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .btn-solution:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+        }
+
+        #solution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-right: 5px solid var(--success-color);
+            background: #f0fff4;
+            line-height: 2;
+            border-radius: 5px;
+        }
+
+        .quiz-placeholder {
+            text-align: center;
+            padding: 40px;
+            border: 2px dashed #ccc;
+            color: #888;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>منصة الرياضيات للتعليم المتوسط</h1>
+    <p>أهلاً بكم يا تلاميذي الأعزاء في فضاء الرياضيات</p>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>📚 ملخص الدرس: الأعداد الطبيعية والناطقة</h2>
+        <p>تذكر: القاسم المشترك الأكبر \(PGCD\) لعددين هو أكبر عدد يقسمهما في آن واحد.</p>
+    </div>
+
+    <div class="card">
+        <h2>✏️ تمرين مقترح (4 متوسط)</h2>
+        <p>1) احسب القاسم المشترك الأكبر للعددين \(1215\) و \(945\).</p>
+        <p>2) اكتب الكسر \(\frac{945}{1215}\) على شكل كسر غير قابل للاختزال.</p>
+        
+        <button class="btn-solution" onclick="toggleSolution()">إظهار الحل النموذجي</button>
+
+        <div id="solution-box">
+            <strong>الخطوة 1: حساب الـ \(PGCD\) باستعمال خوارزمية إقليدس:</strong><br>
+            \(1215 = 945 \times 1 + 270\)<br>
+            \(945 = 270 \times 3 + 135\)<br>
+            \(270 = 135 \times 2 + 0\)<br>
+            إذن: \(PGCD(1215, 945) = 135\)<br><br>
+            <strong>الخطوة 2: اختزال الكسر:</strong><br>
+            \(\frac{945 \div 135}{1215 \div 135} = \frac{7}{9}\)
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📝 اختبارات تفاعلية (كويز)</h2>
+        <div class="quiz-placeholder">
+            قريباً سيتم إضافة أسئلة تفاعلية هنا بنظام التصحيح التلقائي!
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleSolution() {
+        var x = document.getElementById("solution-box");
+        var btn = document.querySelector(".btn-solution");
+        if (x.style.display === "none" || x.style.display === "") {
+            x.style.display = "block";
+            btn.innerHTML = "إخفاء الحل";
+        } else {
+            x.style.display = "none";
+            btn.innerHTML = "إظهار الحل النموذجي";
+        }
+    }
+</script>
+
+</body>
+</html>
