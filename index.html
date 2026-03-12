@@ -84,21 +84,22 @@
 </div>
 
 <script>
-    async function askAI() {
+async function askAI() {
     const input = document.getElementById('user-input');
     const msgDiv = document.getElementById('messages');
     const text = input.value;
     if(!text) return;
 
+    // إظهار رسالة المستخدم في الواجهة
     msgDiv.innerHTML += `<div class="msg user-msg"><b>أنت:</b> ${text}</div>`;
     input.value = "";
     msgDiv.scrollTop = msgDiv.scrollHeight;
 
-    // المفتاح الخاص بك
+    // المفتاح الخاص بك الذي ينتهي بـ ZanU
     const API_KEY = "AIzaSyCKYjmPx78dMNW3HOY51wAgiyElPM0SYow"; 
     
-    // الرابط المستقر v1 مع نموذج Flash السريع
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    // الرابط الصحيح والمجاني للنموذج السريع
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(url, {
@@ -106,31 +107,25 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{ text: "أنت أستاذ رياضيات جزائري خبير. أجب باختصار ومنهجية تعليمية على سؤال التلميذ التالي: " + text }]
-                }],
-                generationConfig: {
-                    temperature: 0.7,
-                    topK: 40,
-                    topP: 0.95,
-                    maxOutputTokens: 1024,
-                }
+                    parts: [{ text: "أنت أستاذ رياضيات جزائري خبير في التعليم المتوسط. أجب باختصار على سؤال التلميذ: " + text }]
+                }]
             })
         });
 
         const data = await response.json();
         
         if (data.error) {
-            // في حال وجود خطأ في المفتاح أو الخدمة
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red"><b>خطأ من جوجل:</b> ${data.error.message}</div>`;
+            // شرح الخطأ إذا كان هناك مشكلة في الإعدادات
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">خطأ تقني: ${data.error.message}</div>`;
         } else if (data.candidates && data.candidates[0].content) {
-            // النجاح وإظهار الإجابة
+            // عرض إجابة الأستاذ الإلكتروني
             const aiResponse = data.candidates[0].content.parts[0].text;
             msgDiv.innerHTML += `<div class="msg ai-msg"><b>المساعد:</b> ${aiResponse}</div>`;
         } else {
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">تم حظر الإجابة أو الموديل غير متاح حالياً.</div>`;
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">عذراً، لم أتمكن من الرد حالياً.</div>`;
         }
     } catch (e) {
-        msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">فشل الاتصال: يرجى التحقق من اتصال الإنترنت.</div>`;
+        msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">فشل الاتصال: تأكد من تشغيل الموقع من رابط GitHub Pages المباشر.</div>`;
     }
     msgDiv.scrollTop = msgDiv.scrollHeight;
 }
