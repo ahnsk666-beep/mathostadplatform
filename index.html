@@ -94,10 +94,10 @@ async function askAI() {
     input.value = "";
     msgDiv.scrollTop = msgDiv.scrollHeight;
 
+    // المفتاح الخاص بك
     const API_KEY = "AIzaSyCKYjmPx78dMNW3HOY51wAgiyElPM0SYow"; 
     
-    // الرابط المحدث الذي يحل مشكلة "Not Found"
-    // جربنا v1 وفشل، لذا سنستخدم v1beta مع الموديل الأحدث
+    // التعديل الجوهري هنا: v1beta بدلاً من v1
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
@@ -105,20 +105,19 @@ async function askAI() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: "أنت أستاذ رياضيات جزائري خبير، أجب باختصار: " + text }] }]
+                contents: [{ parts: [{ text: "أنت أستاذ رياضيات جزائري خبير، أجب باختصار على: " + text }] }]
             })
         });
 
         const data = await response.json();
         
         if (data.error) {
-            // إذا استمر الخطأ، سنعرف السبب الحقيقي هنا
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red"><b>تنبيه من جوجل:</b> ${data.error.message}</div>`;
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red"><b>تنبيه:</b> ${data.error.message}</div>`;
         } else if (data.candidates && data.candidates[0].content) {
             const aiResponse = data.candidates[0].content.parts[0].text;
             msgDiv.innerHTML += `<div class="msg ai-msg"><b>المساعد:</b> ${aiResponse}</div>`;
         } else {
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">عذراً، لم أستطع معالجة الرد.</div>`;
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">عذراً، لم أستطع معالجة الرد حالياً.</div>`;
         }
     } catch (e) {
         msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">فشل الاتصال: تأكد من تحديث الصفحة.</div>`;
