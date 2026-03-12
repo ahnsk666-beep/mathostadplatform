@@ -92,32 +92,45 @@
 
     msgDiv.innerHTML += `<div class="msg user-msg"><b>أنت:</b> ${text}</div>`;
     input.value = "";
+    msgDiv.scrollTop = msgDiv.scrollHeight;
 
-    // مفتاحك الحقيقي من الصورة
+    // المفتاح الخاص بك
     const API_KEY = "AIzaSyCKYjmPx78dMNW3HOY51wAgiyElPM0SYow"; 
     
-    // الرابط المحدث مع موديل gemini-pro المستقر
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+    // الرابط المستقر v1 مع نموذج Flash السريع
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: "أنت أستاذ رياضيات جزائري خبير، أجب باختصار على: " + text }] }]
+                contents: [{
+                    parts: [{ text: "أنت أستاذ رياضيات جزائري خبير. أجب باختصار ومنهجية تعليمية على سؤال التلميذ التالي: " + text }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 1024,
+                }
             })
         });
 
         const data = await response.json();
         
-        if (data.candidates && data.candidates[0].content) {
+        if (data.error) {
+            // في حال وجود خطأ في المفتاح أو الخدمة
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red"><b>خطأ من جوجل:</b> ${data.error.message}</div>`;
+        } else if (data.candidates && data.candidates[0].content) {
+            // النجاح وإظهار الإجابة
             const aiResponse = data.candidates[0].content.parts[0].text;
             msgDiv.innerHTML += `<div class="msg ai-msg"><b>المساعد:</b> ${aiResponse}</div>`;
         } else {
-            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">حدث خطأ في استجابة الموديل، يرجى المحاولة لاحقاً.</div>`;
+            msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">تم حظر الإجابة أو الموديل غير متاح حالياً.</div>`;
         }
     } catch (e) {
-        msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">خطأ في الاتصال: تأكد من تشغيل الموقع من رابط GitHub Pages.</div>`;
+        msgDiv.innerHTML += `<div class="msg ai-msg" style="color:red">فشل الاتصال: يرجى التحقق من اتصال الإنترنت.</div>`;
     }
     msgDiv.scrollTop = msgDiv.scrollHeight;
 }
